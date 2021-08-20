@@ -31,6 +31,13 @@ Utilizado para utilizar o php no terminal.
 
 Podemos utilizar o metodo count($exemplo), para pegar a quantidade de itens nessa lista.
 
+- exit()
+  Para o codigo onde o exit foi executado.
+
+- mb_strtoupper() ou caso a extensão não tenha sido habilitada: strtououpper();
+
+Serve para colocar todas as strings em letras maisculas.
+
 # Estrutura de Repetição
 
 Uma boa pratica é chamar a variavel de 'i'.
@@ -190,15 +197,14 @@ $idade[] = 30;
 Assim vamos adicionar ao indice mais um dado, que seria o 30.
 
 - Quando não temos um indice no formato numerico, temos que passar a chave, pois se não ele vai substituir pelo primeiro
-  numero que é normalmente o 0.
-ex de criação:
+  numero que é normalmente o 0. ex de criação:
 
 $contasC['40028922'] = [
 "titular" => "Josemar",
 "saldo" => 4855
 ];
 
-foreach ($contasC as  $contasCorrentes) {
+foreach ($contasC as $contasCorrentes) {
 
     echo $contasCorrentes['titular'] . PHP_EOL;
 
@@ -206,7 +212,146 @@ foreach ($contasC as  $contasCorrentes) {
 
 Assim, os dados do josemar seriam introduzidos no ultimo lugar no nosso array.
 
-
 ## Tipos de Chaves
 
-  
+Para verificar como vai ser o comportamente quando declaramos o tipo, podemos consultar:
+
+https://www.php.net/manual/pt_BR/types.comparisons.php
+
+## Funções
+
+Quando trabalhamos com funções, podemos utilizar a seguinte sintaxe:
+
+function exemplo(){
+
+    return ex;
+
+}
+
+Nesse caso, nossa função teria um retorno. E não tem parametros "pre-passados".
+
+Ou podemos fazer também assim:
+
+function sacar($conta, $valorSaque){
+
+    if ($valorSaque > $conta['saldo']){
+        echo "Você não pode sacar esse valor";
+    }
+    else{
+        $conta['saldo'] -= $valorSaque;
+    }
+
+    return $conta;
+
+}
+
+Que nesse caso vai ter um retorno e podemos utilizar essa função mais a frente, criando assim uma facilidade na
+utilização do codigo.
+
+- Obs: Quando estamos trabalhando com funções utilizamos as chaves na linha de baixo, e estrutura de repetição na mesma
+  linha.
+
+## Interpolação & Require
+
+# String complexas
+
+Quando se temos dados mais complexos, podemos envolver os dados em chaves. {}
+
+Deixando o codigo da seguinte forma:
+
+echo $cpf{$contasCorrentes['titular']} {$contasCorrentes['saldo']};
+
+Na documentação temos essas informações sobre strings:
+
+https://www.php.net/manual/pt_BR/language.types.string.php
+
+## Arquivos separados
+
+Para incluir arquivos externos no php, podemos utilizar o include. Assim:
+
+include(nome_do_arquivo.php)
+
+ou
+
+include 'nome_do_arquivo.php';
+
+Mas a melhor de forma de chamar esse arquivo é através do require, onde, caso esse arquivo não seja encontrado, vai
+parar a execução do codigo sem muitos problemas.
+
+require 'nome_do_arquivo.php';
+
+Para verificar se o nome do arquivo, já foi inserido podemos utilizar o require_onde, assim ele verificar se o arquivo
+em algum momento do codigo já foi inserido alguma outra vez.
+
+require_onde 'nome_do_arquivo.php';
+
+## Valor Vs Referencia
+
+Referencia é quando passamos um valor e queremos que o valor exato seja alterado e não a sua "copia". Ex:
+
+Sendo assim o valor que foi chamado na variavel vai refletir no valor da chamada da função.
+
+Mas tem problema, pois não temos muita segurança com isso. Pois ela tem acesso a muitos dados no nosso caso.
+
+## Função list
+
+Esse é o nome da função que recebe variaveis e essa função vai fazer com que essa função que foi atribuida a ela seja
+passado indices. ex
+
+list('titular'=>$titular , 'saldo' => $saldo) = $contasCorrentes;
+
+Ou
+
+['titular'=> $titular , 'saldo' => $saldo] = $contasCorrentes;
+
+## Removendo Itens/Variaveis do Array e outros
+
+Para removar um variavel da memoria do php, podemos utilizar o unset, assim o mesmo vai deletar esse dado da memoria do
+php.
+
+## PHP e HMTMl
+
+Para trabalhar com o PHP e HTMl, podemos utilizar as seguintes funcionalidades:
+
+- < ? = ?>
+
+Utilizado como se dissese-mos 'echo', assim agilizamos na hora de informar no html que queremos exibir uma mensagem.
+
+< dt >
+< ?= $contasCorrentes['titular']; ?> - <?= $cpf ?>;
+</ dt>
+
+Para criarmos uma chamada de exibição como um foreach, podemos utilizar:
+
+< ?php foreach(exemplos){ ?>
+*Codigo HTMl*
+< ? } ?>
+
+Assim conseguimos exibir o codigo php junto com o html sem mais problemas. Exemplo completo abaixo:
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Conta Corrente</title>
+</head>
+<body>
+<h1>Contas Correntes</h1>
+
+    <?php foreach ($contasC as $cpf => $contasCorrentes){ ?>
+        <dl>
+            <dt>
+               <?= $contasCorrentes['titular']; ?> - <?= $cpf ?>;
+            </dt>
+            <dt>
+                <?=  $contasCorrentes['saldo']; ?>
+            </dt>
+        <?php  }  ?>
+        </dl>
+
+</body>
+</html>
+
