@@ -337,6 +337,7 @@ Assim conseguimos exibir o codigo php junto com o html sem mais problemas. Exemp
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Conta Corrente</title>
+
 </head>
 <body>
 <h1>Contas Correntes</h1>
@@ -354,4 +355,92 @@ Assim conseguimos exibir o codigo php junto com o html sem mais problemas. Exemp
 
 </body>
 </html>
+
+# ----------- Orientação a Objetos ------------
+
+- Arquivos OO, encontra-se no src.
+
+## Classes e Objetos
+
+- Classe é o modelo utilizado para criar um objeto.
+
+Utilizamos Classes como 'formas', assim conseguimos moldar os dados como nós queremos. Sempre iniciando com as letras
+das suas frases maiusculas.  
+Então, a partir dessa classe conseguimos criar com o tipo da classe que criamos e definimos qual o seu modelo.
+
+< ? php
+
+class Conta { public $cpfTitular; public $nomeTitular; public $saldo;
+
+}
+
+Para chamar a classe em questão criada, chamamos da seguinte forma de exemplo:
+
+    $novaConta = new Conta(); 
+
+Dessa forma dizemos que o tipo de do dado sera baseado na 'forma'/Classe, Conta.
+
+## Definindo os Dados
+
+Primeiro temos que informar para o php quem pode acessar os dados que estamos disponibilizando. Para isso podemos
+utilizar 2 definições: *public* ou *private*.
+
+Quando qualquer 'pessoal' puder acessar esse dado, ou quando quisermos disponilizar esse dado, utilizamos o public.
+Quando esse dado pode ser acesso apenas pelo objeto em questão utilizamos o private. EX:
+
+public $cpfTitular; public $nomeTitular; public $saldo;
+
+OBs: Se o projeto for acima do PHP 7.4, podemos utilizar da seguinte forma:
+
+public string $cpfTitular; public string $nomeTitular; public float $saldo;
+
+Assim, chamamos o mesmo de atributos da classe/objetos.
+
+Para acesssar os dados criados, utilizamos uma -> , para simboliar o que queremos acessar.
+
+$primeiraConta -> saldo;
+
+Ou para enviarmos dados:
+
+$primeiraConta -> saldo = 1000;
+
+De qualquer forma, vamos conseguir acessar esses dados e passar dados para o mesmo.
+
+## Valor vs Referencia
+
+Quando criamos uma variavel x = 5, sabemos que x tem o valor de 5. Mas quando passamos y = x, estamos dizendo que y, tem
+a referencia do y. Logo, quando atualizarmos o valor de x, y também vai receber o valor, pois esse dado esta utilizando
+a referencia de x, para 'se manter'.
+
+## Metodos
+
+São funções que criamos dentro da classe, para assim conseguirmos efetuar operações no código.
+
+Ex:
+public function sacar (float $valorSaque)
+{
+if ($valorSaque > $this->saldo){
+
+    echo 'Saldo indisponivel para saque';
+
+}else{
+
+    $this->saldo -= $valorSaque;
+
+}
+}
+
+Utilizamos $this->exemplo, para pegar as referencias dos dados. Assim, conseguindo acessar o mesmo quando for chamado.
+
+Após a criação do codigo, utilizamos o mesmo assim:
+
+$Conta1 ->sacar(800);
+
+Passando a conta de onde queremos remover o dados e em seguida chamados pelo ->  o nome do metodo e em seguida o valor
+entre parenteses que queremos sacar. 
+
+- OBS: IDEAL NÃO UTILIZAR ELSE, NO CASO PODEMOS UTILIZAR O *return*, para retornar um erro. 
+
+
+
 
